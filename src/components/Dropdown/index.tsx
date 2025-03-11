@@ -7,6 +7,7 @@ import React, {
   useEffect,
   createContext,
   useContext,
+  useImperativeHandle,
 } from "react";
 import { Button, ButtonProps } from "../Button";
 import { cn } from "../../utils/cn";
@@ -25,8 +26,8 @@ interface DropdownContextProps {
   open: boolean;
   setOpen: React.Dispatch<SetStateAction<boolean>>;
   onHover: boolean;
-  triggerRef: React.RefObject<HTMLButtonElement | null>;
-  menuRef: React.RefObject<HTMLDivElement | null>;
+  triggerRef: React.RefObject<HTMLButtonElement>;
+  menuRef: React.RefObject<HTMLDivElement>;
 }
 
 const DropdownContext = createContext<DropdownContextProps | null>(null);
@@ -39,8 +40,8 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
   ({ className, children, onHover = false, ...props }, ref) => {
     const [open, setOpen] = useState<boolean>(false);
 
-    const triggerRef = useRef<HTMLButtonElement | null>(null);
-    const menuRef = useRef<HTMLDivElement | null>(null);
+    const triggerRef = useRef<HTMLButtonElement>(null);
+    const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
       function handleClickOutside(e: MouseEvent) {
@@ -83,7 +84,7 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
         </div>{" "}
       </DropdownContext.Provider>
     );
-  },
+  }
 );
 Dropdown.displayName = "Dropdown";
 
@@ -94,13 +95,12 @@ const DropdownTrigger = React.forwardRef<HTMLButtonElement, ButtonProps>(
       throw new Error("DropdownTwigger must be used in a Dropdown!");
 
     const { open, setOpen, triggerRef } = context;
+
+    useImperativeHandle(ref, () => triggerRef.current as HTMLButtonElement);
+
     return (
       <Button
-        ref={(el) => {
-          triggerRef.current = el;
-          if (typeof ref === "function") ref(el);
-          else if (ref) ref.current = el;
-        }}
+        ref={triggerRef}
         onClick={(e) => {
           e.stopPropagation();
           setOpen(!open);
@@ -111,7 +111,7 @@ const DropdownTrigger = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {children}
       </Button>
     );
-  },
+  }
 );
 DropdownTrigger.displayName = "DropdownTrigger";
 
@@ -128,7 +128,7 @@ const dropdownMenuVariants = cva(
     defaultVariants: {
       position: "left",
     },
-  },
+  }
 );
 
 interface DropdownMenuProps
@@ -146,24 +146,22 @@ const DropdownMenu = React.forwardRef<HTMLDivElement, DropdownMenuProps>(
 
     const { open, menuRef } = context;
 
+    useImperativeHandle(ref, () => menuRef.current as HTMLDivElement);
+
     return (
       <OptionList
-        ref={(el) => {
-          menuRef.current = el;
-          if (typeof ref === "function") ref(el);
-          else if (ref) ref.current = el;
-        }}
+        ref={menuRef}
         className={cn(
           dropdownMenuVariants({ position }),
           open ? "scale-100 opacity-100" : "scale-90 opacity-0",
-          className,
+          className
         )}
         {...props}
       >
         {children}
       </OptionList>
     );
-  },
+  }
 );
 DropdownMenu.displayName = "DropdownMenu";
 
@@ -202,7 +200,7 @@ const DropdownItem = React.forwardRef<HTMLButtonElement, OptionListItemProps>(
         {children}
       </OptionListItem>
     );
-  },
+  }
 );
 DropdownItem.displayName = "DropdownItem";
 

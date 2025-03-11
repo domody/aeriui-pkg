@@ -1,7 +1,13 @@
 "use client";
 
 import React, { SetStateAction, useRef } from "react";
-import { useState, useEffect, createContext, useContext } from "react";
+import {
+  useState,
+  useEffect,
+  createContext,
+  useContext,
+  useImperativeHandle,
+} from "react";
 import { cn } from "../../utils/cn";
 
 import {
@@ -18,7 +24,7 @@ interface ContextMenuContextProps {
   setOpen: React.Dispatch<SetStateAction<boolean>>;
   coords: { x: number; y: number };
   setCoords: React.Dispatch<SetStateAction<{ x: number; y: number }>>;
-  menuRef: React.RefObject<HTMLDivElement | null>;
+  menuRef: React.RefObject<HTMLDivElement>;
 }
 
 const ContextMenuContext = createContext<ContextMenuContextProps | null>(null);
@@ -33,7 +39,7 @@ const ContextMenu = React.forwardRef<
     y: 0,
   });
 
-  const menuRef = useRef<HTMLDivElement | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -109,13 +115,11 @@ const ContextMenuContent = React.forwardRef<HTMLDivElement, OptionListProps>(
 
     const { open, coords, menuRef } = context;
 
+    useImperativeHandle(ref, () => menuRef.current as HTMLDivElement);
+
     return (
       <div
-        ref={(el) => {
-          menuRef.current = el;
-          if (typeof ref === "function") ref(el);
-          else if (ref) ref.current = el;
-        }}
+        ref={menuRef}
         style={{ top: `${coords.y}px`, left: `${coords.x}px` }}
         className={cn(
           "absolute z-[99] origin-top-left transition-[scale]",

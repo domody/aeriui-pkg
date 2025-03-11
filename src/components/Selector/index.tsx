@@ -7,6 +7,7 @@ import React, {
   useEffect,
   createContext,
   useContext,
+  useImperativeHandle,
 } from "react";
 import { Button, ButtonProps } from "../Button";
 import { cn } from "../../utils/cn";
@@ -29,8 +30,8 @@ interface SelectorContextProps {
   setActive: (value: string) => void;
   checkEnd: boolean;
   setCheckEnd: React.Dispatch<SetStateAction<boolean>>;
-  triggerRef: React.RefObject<HTMLButtonElement | null>;
-  menuRef: React.RefObject<HTMLDivElement | null>;
+  triggerRef: React.RefObject<HTMLButtonElement>;
+  menuRef: React.RefObject<HTMLDivElement>;
 }
 
 const SelectorContext = createContext<SelectorContextProps | null>(null);
@@ -51,8 +52,8 @@ const Selector = React.forwardRef<HTMLDivElement, SelectorProps>(
     );
     const [open, setOpen] = useState<boolean>(false);
     const [checkEnd, setCheckEnd] = useState<boolean>(true);
-    const triggerRef = useRef<HTMLButtonElement | null>(null);
-    const menuRef = useRef<HTMLDivElement | null>(null);
+    const triggerRef = useRef<HTMLButtonElement>(null);
+    const menuRef = useRef<HTMLDivElement>(null);
 
     const activeValue = value ?? internalValue;
 
@@ -123,13 +124,11 @@ const SelectorTrigger = React.forwardRef<
 
   const { open, setOpen, active, triggerRef } = context;
 
+  useImperativeHandle(ref, () => triggerRef.current as HTMLButtonElement);
+
   return (
     <Button
-      ref={(el) => {
-        triggerRef.current = el;
-        if (typeof ref === "function") ref(el);
-        else if (ref) ref.current = el;
-      }}
+      ref={triggerRef}
       className={cn("min-w-[200px] justify-between px-4", className)}
       variant={"outline"}
       onClick={(e) => {
@@ -185,13 +184,10 @@ const SelectorContent = React.forwardRef<HTMLDivElement, SelectContentProps>(
       setCheckEnd(checkEnd);
     }, [setCheckEnd, checkEnd]);
 
+    useImperativeHandle(ref, () => menuRef.current as HTMLDivElement);
     return (
       <OptionList
-        ref={(el) => {
-          menuRef.current = el;
-          if (typeof ref === "function") ref(el);
-          else if (ref) ref.current = el;
-        }}
+        ref={menuRef}
         className={cn(
           selectorContentVariants({ position }),
           "z-100 w-min min-w-full",

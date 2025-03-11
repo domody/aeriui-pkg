@@ -7,6 +7,7 @@ import React, {
   createContext,
   useContext,
   SetStateAction,
+  useImperativeHandle,
 } from "react";
 import { cn } from "../../utils/cn";
 import { ChevronDown } from "lucide-react";
@@ -132,6 +133,8 @@ const AccordionContent = React.forwardRef<
 
   const { setContentHeight } = context;
 
+  useImperativeHandle(ref, () => contentRef.current as HTMLDivElement);
+
   useEffect(() => {
     if (contentRef.current) {
       setContentHeight(contentRef.current.clientHeight);
@@ -139,15 +142,7 @@ const AccordionContent = React.forwardRef<
   }, [setContentHeight, children]);
 
   return (
-    <div
-      ref={(el) => {
-        contentRef.current = el;
-        if (typeof ref === "function") ref(el);
-        else if (ref) ref.current = el;
-      }}
-      className={cn(className, "px-2 pb-4")}
-      {...props}
-    >
+    <div ref={contentRef} className={cn(className, "px-2 pb-4")} {...props}>
       {children}
     </div>
   );
