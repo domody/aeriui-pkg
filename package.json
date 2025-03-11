@@ -1,6 +1,6 @@
 {
   "name": "aeriui",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A modern, accessible, and highly customizable React UI library built with TypeScript and Tailwind CSS.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
