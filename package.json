@@ -20,11 +20,11 @@
     "tslib": "^2.0.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.0",
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.6",
+    "@types/react": "^18.0.0",
     "rollup": "^4.18.1",
     "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
@@ -54,9 +54,12 @@
     "react-hooks"
   ],
   "dependencies": {
+    "@tailwindcss/postcss": "^4.0.13",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.479.0",
-    "tailwind-merge": "^3.0.2"
+    "lucide-react": "^0.351.0",
+    "postcss": "^8.5.3",
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss": "^4.0.13"
   }
 }
