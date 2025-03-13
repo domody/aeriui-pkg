@@ -10,7 +10,7 @@ import React, {
   useImperativeHandle,
 } from "react";
 import { Button, ButtonProps } from "../Button";
-import { cn } from "../../utils/cn";
+import { cn } from "@/app/lib/utils/cn";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import {

@@ -68,6 +68,14 @@ const command = args[0];
 const pkgRoot = process.cwd();
 const pkgComponentsDir = path.join(pkgRoot, "src", "components");
 
+const availableComponents = fs.existsSync(pkgComponentsDir)
+  ? fs
+      .readdirSync(pkgComponentsDir)
+      .filter((file) =>
+        fs.statSync(path.join(pkgComponentsDir, file)).isDirectory()
+      )
+  : [];
+
 if (command === "init") {
   console.log("Initializing aeriui...\n");
 
@@ -170,20 +178,43 @@ export function cn(...inputs: ClassValue[]) {
   });
 } else if (command === "add" && args[1]) {
   const componentName = args[1];
-  console.log(`Adding ${componentName}...`);
 
-  const sourceComponentPath = path.join(
-    __dirname,
-    "..",
+  if (!availableComponents.includes(componentName)) {
+    console.error(`❌ Component "${componentName}" not available.`);
+    console.log(`ℹ️ Available components: ${availableComponents.join(", ")}`);
+    process.exit(1);
+  }
+
+  const sourcePath = path.join(pkgComponentsDir, componentName);
+  const possibleFiles = ["index.tsx", `${componentName}.tsx`];
+  let sourceFile = possibleFiles.find((file) =>
+    fs.existsSync(path.join(sourcePath, file))
+  );
+
+  if (!sourceFile) {
+    console.error(`❌ No valid component file found in ${sourcePath}`);
+    process.exit(1);
+  }
+
+  const sourceFilePath = path.join(sourcePath, sourceFile);
+  const destFilePath = path.join(
+    pkgRoot,
+    "src",
+    "app",
     "components",
+    "ui",
     `${componentName}.tsx`
   );
-  console.log(sourceComponentPath);
-  const destinationComponentPath = path.join(
-    pkgComponentsDir,
-    `${componentName}.tsx`
+
+  // Ensure destination folder exists
+  fs.mkdirSync(path.dirname(destFilePath), { recursive: true });
+
+  // Copy the file
+  fs.copyFileSync(sourceFilePath, destFilePath);
+
+  console.log(
+    `✅ Component "${componentName}" added to src/app/components/ui/${componentName}`
   );
-  console.log(destinationComponentPath);
 } else {
   console.log(`Usage:
     npx aeriui init  -> Setup the necessary files

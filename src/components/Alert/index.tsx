@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "../../utils/cn";
+import { cn } from "@/app/lib/utils/cn";
 import { cva, VariantProps } from "class-variance-authority";
 
 const alertVariants = cva(

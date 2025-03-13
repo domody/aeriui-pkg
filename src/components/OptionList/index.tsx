@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Button, ButtonProps } from "../Button";
-import { cn } from "../../utils/cn";
+import { cn } from "@/app/lib/utils/cn";
 
 interface OptionListProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;

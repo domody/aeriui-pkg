@@ -9,7 +9,7 @@ import React, {
   SetStateAction,
   useImperativeHandle,
 } from "react";
-import { cn } from "../../utils/cn";
+import { cn } from "@/app/lib/utils/cn";
 import { ChevronDown } from "lucide-react";
 
 interface AccordionContextProps {

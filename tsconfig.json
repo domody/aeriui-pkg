@@ -20,8 +20,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "@aeriui/*": [
-        "./src/app/components/ui/*"
+      "@/*": [
+        "./src/*"
       ]
     }
   },

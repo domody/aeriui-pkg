@@ -9,7 +9,7 @@ import {
   useLayoutEffect,
 } from "react";
 import React from "react";
-import { cn } from "../../utils/cn";
+import { cn } from "@/app/lib/utils/cn";
 
 interface TabsContextProps {
   active: { value: string; x: number; width: number };

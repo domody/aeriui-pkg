@@ -8,7 +8,7 @@ import {
   useContext,
   useImperativeHandle,
 } from "react";
-import { cn } from "../../utils/cn";
+import { cn } from "@/app/lib/utils/cn";
 
 import {
   OptionList,
