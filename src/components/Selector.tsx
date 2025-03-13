@@ -9,7 +9,7 @@ import React, {
   useContext,
   useImperativeHandle,
 } from "react";
-import { Button, ButtonProps } from "../Button";
+import { Button, ButtonProps } from "./Button";
 import { cn } from "@/app/lib/utils/cn";
 import { cva, type VariantProps } from "class-variance-authority";
 
@@ -19,7 +19,7 @@ import {
   OptionListSection,
   OptionListItem,
   OptionListItemProps,
-} from "../OptionList";
+} from "./OptionList";
 
 import { ChevronDown, Check } from "lucide-react";
 

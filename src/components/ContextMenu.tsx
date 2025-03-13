@@ -17,7 +17,7 @@ import {
   OptionListSectionProps,
   OptionListItem,
   OptionListItemProps,
-} from "../OptionList";
+} from "./OptionList";
 
 interface ContextMenuContextProps {
   open: boolean;

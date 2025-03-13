@@ -73,7 +73,7 @@ const GITHUB_BASE_URL =
   "https://raw.githubusercontent.com/domody/aeriui-pkg/refs/heads/main/src/components/";
 
 function downloadComponent(componentName) {
-  const fileUrl = `${GITHUB_BASE_URL}${componentName}/index.tsx`;
+  const fileUrl = `${GITHUB_BASE_URL}${componentName}.tsx`;
   const destFilePath = path.join(destDir, `${componentName}.tsx`);
 
   console.log(`Adding ${componentName}...`);
