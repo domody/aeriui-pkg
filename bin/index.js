@@ -61,20 +61,47 @@ const AERIUI_CSS = `
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+const https = require("https");
 
 const args = process.argv.slice(2);
 const command = args[0];
 
 const pkgRoot = process.cwd();
-const pkgComponentsDir = path.join(pkgRoot, "src", "components");
+const destDir = path.join(pkgRoot, "src", "app", "components", "ui");
 
-const availableComponents = fs.existsSync(pkgComponentsDir)
-  ? fs
-      .readdirSync(pkgComponentsDir)
-      .filter((file) =>
-        fs.statSync(path.join(pkgComponentsDir, file)).isDirectory()
-      )
-  : [];
+const GITHUB_BASE_URL =
+  "https://raw.githubusercontent.com/domody/aeriui-pkg/refs/heads/main/src/components/";
+
+function downloadComponent(componentName) {
+  const fileUrl = `${GITHUB_BASE_URL}${componentName}/index.tsx`;
+  const destFilePath = path.join(destDir, `${componentName}.tsx`);
+
+  console.log(`Adding ${componentName}...`);
+
+  // Ensure destination folder exists
+  fs.mkdirSync(destDir, { recursive: true });
+
+  https
+    .get(fileUrl, (res) => {
+      if (res.statusCode !== 200) {
+        console.error(
+          `❌ Failed to download component "${componentName}". Check if it exists.`
+        );
+        return;
+      }
+
+      const fileStream = fs.createWriteStream(destFilePath);
+      res.pipe(fileStream);
+
+      fileStream.on("finish", () => {
+        fileStream.close();
+        console.log(`✅ Component "${componentName}" added at ${destFilePath}`);
+      });
+    })
+    .on("error", (err) => {
+      console.error(`❌ Error fetching component: ${err.message}`);
+    });
+}
 
 if (command === "init") {
   console.log("Initializing aeriui...\n");
@@ -178,43 +205,7 @@ export function cn(...inputs: ClassValue[]) {
   });
 } else if (command === "add" && args[1]) {
   const componentName = args[1];
-
-  if (!availableComponents.includes(componentName)) {
-    console.error(`❌ Component "${componentName}" not available.`);
-    console.log(`ℹ️ Available components: ${availableComponents.join(", ")}`);
-    process.exit(1);
-  }
-
-  const sourcePath = path.join(pkgComponentsDir, componentName);
-  const possibleFiles = ["index.tsx", `${componentName}.tsx`];
-  let sourceFile = possibleFiles.find((file) =>
-    fs.existsSync(path.join(sourcePath, file))
-  );
-
-  if (!sourceFile) {
-    console.error(`❌ No valid component file found in ${sourcePath}`);
-    process.exit(1);
-  }
-
-  const sourceFilePath = path.join(sourcePath, sourceFile);
-  const destFilePath = path.join(
-    pkgRoot,
-    "src",
-    "app",
-    "components",
-    "ui",
-    `${componentName}.tsx`
-  );
-
-  // Ensure destination folder exists
-  fs.mkdirSync(path.dirname(destFilePath), { recursive: true });
-
-  // Copy the file
-  fs.copyFileSync(sourceFilePath, destFilePath);
-
-  console.log(
-    `✅ Component "${componentName}" added to src/app/components/ui/${componentName}`
-  );
+  downloadComponent(componentName);
 } else {
   console.log(`Usage:
     npx aeriui init  -> Setup the necessary files
