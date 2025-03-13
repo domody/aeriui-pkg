@@ -16,7 +16,7 @@ const OptionList = React.forwardRef<HTMLDivElement, OptionListProps>(
         ref={ref}
         className={cn(
           "border-border bg-background h-min max-w-96 min-w-56 rounded-md border px-1 shadow-md transition-all",
-          className,
+          className
         )}
         {...props}
       >
@@ -24,7 +24,7 @@ const OptionList = React.forwardRef<HTMLDivElement, OptionListProps>(
           <p
             className={cn(
               "pt-2 pl-2 text-sm font-semibold",
-              titleSeperator && "border-border border-b pb-2.5",
+              titleSeperator && "border-border border-b pb-2.5"
             )}
           >
             {title}
@@ -33,7 +33,7 @@ const OptionList = React.forwardRef<HTMLDivElement, OptionListProps>(
         {children}
       </div>
     );
-  },
+  }
 );
 OptionList.displayName = "OptionList";
 
@@ -69,8 +69,8 @@ const OptionListItem = React.forwardRef<HTMLButtonElement, OptionListItemProps>(
         className={cn(
           "w-full justify-start rounded px-2",
           variant === "destructive" &&
-            "hover:text-destructive-foreground text-destructive hover:bg-destructive bg-transparent",
-          className,
+            "hover:text-destructive-foreground text-destructive hover:bg-destructive bg-transparent shadow-none",
+          className
         )}
         variant={variant}
         {...props}
@@ -83,7 +83,7 @@ const OptionListItem = React.forwardRef<HTMLButtonElement, OptionListItemProps>(
         )}
       </Button>
     );
-  },
+  }
 );
 OptionListItem.displayName = "OptionListItem";
 

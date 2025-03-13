@@ -4,34 +4,66 @@ const AERIUI_CSS = `
 @import "tailwindcss";
 
 /* AeriUI CSS Vars */
-:root {
-  --background: 13.54% 0.0047 285.76;
-  --foreground: 82.64% 0.0067 286.27;
+@layer base {
+  :root {
+    --background: 95.64% 0.0067 286.27;
+    --foreground: 13.54% 0.0047 285.76;
 
-  --primary: 92.64% 0.0067 286.27;
-  --primary-foreground: 5% 0.01 250;
+    --primary: 92.64% 0.0067 286.27;
+    --primary-foreground: 5% 0.01 250;
 
-  --secondary: 23.76% 0.0114 285.5;
-  --secondary-foreground: 90.79% 0.0054 286.29;
+    --secondary: 23.76% 0.0114 285.5;
+    --secondary-foreground: 90.79% 0.0054 286.29;
 
-  --destructive: 61.22% 0.2082 22.24;
-  --destructive-foreground: var(--foreground);
+    --destructive: 61.22% 0.2082 22.24;
+    --destructive-foreground: var(--background);
 
-  --success: 78.49% 0.2002 153.29;
-  --success-foreground: var(--foreground);
+    --success: 78.49% 0.2002 153.29;
+    --success-foreground: var(--foreground);
 
-  --warning: 70% 0.22 60;
-  --warning-foreground: var(--foreground);
+    --warning: 70% 0.22 60;
+    --warning-foreground: var(--foreground);
 
-  --accent: 29.5% 0.0127 279.14;
-  --accent-foreground: var(--foreground);
+    --accent: 89.5% 0.0127 279.14;
+    --accent-foreground: var(--foreground);
 
-  --muted: 29.5% 0.0127 279.14;
-  --muted-foreground: 71.18% 0.0129 286.07;
+    --muted: 89.5% 0.0127 279.14;
+    --muted-foreground: 71.18% 0.0129 286.07;
 
-  --border: 37.36% 0.0137 280.05;
-  --input: 41.6% 0.0183 281.45;
-  --ring: 56.73% 0.0456 274.26;
+    --border: 87.36% 0.0137 280.05;
+    --input: 41.6% 0.0183 281.45;
+    --ring: 56.73% 0.0456 274.26;
+  }
+
+  .dark {
+    --background: 13.54% 0.0047 285.76;
+    --foreground: 82.64% 0.0067 286.27;
+
+    --primary: 92.64% 0.0067 286.27;
+    --primary-foreground: 5% 0.01 250;
+
+    --secondary: 23.76% 0.0114 285.5;
+    --secondary-foreground: 90.79% 0.0054 286.29;
+
+    --destructive: 61.22% 0.2082 22.24;
+    --destructive-foreground: var(--foreground);
+
+    --success: 78.49% 0.2002 153.29;
+    --success-foreground: var(--foreground);
+
+    --warning: 70% 0.22 60;
+    --warning-foreground: var(--foreground);
+
+    --accent: 29.5% 0.0127 279.14;
+    --accent-foreground: var(--foreground);
+
+    --muted: 29.5% 0.0127 279.14;
+    --muted-foreground: 71.18% 0.0129 286.07;
+
+    --border: 37.36% 0.0137 280.05;
+    --input: 41.6% 0.0183 281.45;
+    --ring: 56.73% 0.0456 274.26;
+  }
 }
 
 /* Tailwind v4 Theme Definitions */
@@ -55,6 +87,12 @@ const AERIUI_CSS = `
   --color-border: oklch(var(--border));
   --color-input: oklch(var(--input));
   --color-ring: oklch(var(--ring));
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 `;
 
