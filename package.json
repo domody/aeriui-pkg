@@ -1,6 +1,6 @@
 {
   "name": "aeriui",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "A modern, accessible, and highly customizable React UI library built with TypeScript and Tailwind CSS.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -9,7 +9,9 @@
     "rollup": "rollup -c --bundleConfigAsCjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "bin": "./bin/index.js",
+  "bin": {
+    "aeriui": "./bin/index.js"
+  },
   "author": "domody",
   "license": "MIT",
   "peerDependencies": {
