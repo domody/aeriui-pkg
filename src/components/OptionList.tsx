@@ -67,7 +67,7 @@ const OptionListItem = React.forwardRef<HTMLButtonElement, OptionListItemProps>(
       <Button
         ref={ref}
         className={cn(
-          "w-full justify-start rounded px-2",
+          "w-full justify-start rounded px-2 text-sm",
           variant === "destructive" &&
             "hover:text-destructive-foreground text-destructive hover:bg-destructive bg-transparent shadow-none",
           className
