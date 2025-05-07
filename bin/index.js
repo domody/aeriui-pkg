@@ -271,6 +271,8 @@ export function cn(...inputs: ClassValue[]) {
   }
 } else {
   console.log(`Usage:
-    npx aeriui init  -> Setup the necessary files
-    npx aeriui add <component> -> Add a specific component`);
+    npx aeriui@latest init  -> Setup the necessary files
+    npx aeriui@latest add <component> -> Add a specific component
+    npx aeriui@latest add * -> Add all available componenets
+    `);
 }

@@ -59,7 +59,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         <p
-          className={`peer peer-invalid:peer-not-focus:text-destructive text-sm ${
+          className={`peer peer-invalid:peer-not-focus:text-destructive text-sm pointer-events-none ${
             stationaryLabel
               ? "mb-1 font-medium"
               : "bg-background absolute left-2 px-1 opacity-50 transition-all"
@@ -75,6 +75,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     );
   }
 );
+
 Input.displayName = "Input";
 
 export { Input };

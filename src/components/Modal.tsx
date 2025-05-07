@@ -38,8 +38,10 @@ const Modal = React.forwardRef<
     }
 
     if (open) {
+      document.documentElement.style.overflow = "hidden";
       document.addEventListener("mousedown", handleClickOutside);
     } else {
+      document.documentElement.style.overflow = "";
       document.removeEventListener("mousedown", handleClickOutside);
     }
 
