@@ -129,7 +129,7 @@ const SelectorTrigger = React.forwardRef<
   return (
     <Button
       ref={triggerRef}
-      className={cn("min-w-[200px] justify-between px-4", className)}
+      className={cn("min-w-[200px] h-10 justify-between px-4", className)}
       variant={"outline"}
       onClick={(e) => {
         e.stopPropagation();
