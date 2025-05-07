@@ -110,6 +110,21 @@ const destDir = path.join(pkgRoot, "src", "app", "components", "ui");
 const GITHUB_BASE_URL =
   "https://raw.githubusercontent.com/domody/aeriui-pkg/refs/heads/main/src/components/";
 
+const allComponents = [
+  "Accordion",
+  "Alert",
+  "Badge",
+  "Card",
+  "ContextMenu",
+  "Dropdown",
+  "Input",
+  "Modal",
+  "OptionList",
+  "Selector",
+  "Slot",
+  "Tabs",
+];
+
 function downloadComponent(componentName) {
   const fileUrl = `${GITHUB_BASE_URL}${componentName}.tsx`;
   const destFilePath = path.join(destDir, `${componentName}.tsx`);
@@ -243,7 +258,17 @@ export function cn(...inputs: ClassValue[]) {
   });
 } else if (command === "add" && args[1]) {
   const componentName = args[1];
-  downloadComponent(componentName);
+
+  if (componentName === "all" || componentName === "*") {
+    console.log("Adding all components...\n");
+    allComponents.forEach(downloadComponent);
+  } else if (allComponents.includes(componentName)) {
+    downloadComponent(componentName);
+  } else {
+    console.error(`❌ Unknown component "${componentName}".`);
+    console.log("Available components:");
+    console.log(allComponents.join(", "));
+  }
 } else {
   console.log(`Usage:
     npx aeriui init  -> Setup the necessary files
