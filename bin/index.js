@@ -127,12 +127,38 @@ const allComponents = [
 
 function downloadComponent(componentName) {
   const fileUrl = `${GITHUB_BASE_URL}${componentName}.tsx`;
-  const destFilePath = path.join(destDir, `${componentName}.tsx`);
+
+  // Load aeriui.json if it exists
+  const configPath = path.join(projectRoot, "aeriui.json");
+  let destDirResolved = destDir; // fallback default
+
+  if (fs.existsSync(configPath)) {
+    try {
+      const configData = JSON.parse(fs.readFileSync(configPath, "utf8"));
+      if (configData.componentPath) {
+        destDirResolved = path.join(projectRoot, configData.componentPath);
+      } else {
+        console.warn(
+          "⚠️ Warning: componentPath not found in aeriui.json, using default destination directory."
+        );
+      }
+    } catch (err) {
+      console.warn(
+        `⚠️ Warning: Failed to parse aeriui.json, using default destination directory. Error: ${err.message}`
+      );
+    }
+  } else {
+    console.warn(
+      "⚠️ Warning: aeriui.json not found, using default destination directory."
+    );
+  }
+
+  const destFilePath = path.join(destDirResolved, `${componentName}.tsx`);
 
   console.log(`Adding ${componentName}...`);
 
   // Ensure destination folder exists
-  fs.mkdirSync(destDir, { recursive: true });
+  fs.mkdirSync(destDirResolved, { recursive: true });
 
   https
     .get(fileUrl, (res) => {
@@ -256,6 +282,20 @@ export function cn(...inputs: ClassValue[]) {
 
     console.log("\n🎉 AeriUI has been initialized successfully!");
   });
+
+  // Create aeriui.json file
+  const aeriuiConfig = {
+    createdAt: new Date().toISOString(),
+    description: "AeriUI config file",
+    stylesPath: answers.stylesPath,
+    componentPath: answers.componentPath,
+    cnPath: answers.cnPath,
+  };
+
+  const configPath = path.join(projectRoot, "aeriui.json");
+
+  fs.writeFileSync(configPath, JSON.stringify(aeriuiConfig, null, 2));
+  console.log(`✅ aeriui.json created at ${configPath}`);
 } else if (command === "add" && args[1]) {
   const componentName = args[1];
 
