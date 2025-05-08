@@ -33,6 +33,9 @@ const AERIUI_CSS = `
     --border: 87.36% 0.0137 280.05;
     --input: 41.6% 0.0183 281.45;
     --ring: 56.73% 0.0456 274.26;
+
+    --radius-sm: 0.125rem;
+    --radius: 0.25rem;
   }
 
   .dark {

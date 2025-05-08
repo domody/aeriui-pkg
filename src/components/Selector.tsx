@@ -147,7 +147,7 @@ const SelectorTrigger = React.forwardRef<
 SelectorTrigger.displayName = "SelectorTrigger";
 
 const selectorContentVariants = cva(
-  `bg-background border-border absolute top-[calc(100%+0.5rem)] w-max rounded-lg border transition-all shadow`,
+  `bg-background border-border absolute top-[calc(100%+0.5rem)] w-max rounded border transition-all shadow`,
   {
     variants: {
       position: {
@@ -221,7 +221,7 @@ const SelectorContentItem = React.forwardRef<
   return (
     <OptionListItem
       ref={ref}
-      className={cn("justify-between", className)}
+      className={cn("justify-between rounded-sm", className)}
       onClick={(e) => {
         e.stopPropagation();
         setOpen(false);
