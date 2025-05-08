@@ -12,7 +12,7 @@ const AERIUI_CSS = `
     --primary: 92.64% 0.0067 286.27;
     --primary-foreground: 5% 0.01 250;
 
-    --secondary: 23.76% 0.0114 285.5;
+    --secondary: 87.76% 0.0114 285.5;
     --secondary-foreground: 90.79% 0.0054 286.29;
 
     --destructive: 61.22% 0.2082 22.24;
