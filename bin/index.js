@@ -61,7 +61,7 @@ const AERIUI_CSS = `
     --accent-foreground: var(--foreground);
 
     --muted: 29.5% 0.0127 279.14;
-    --muted-foreground: 71.18% 0.0129 286.07;
+    --muted-foreground: 60.18% 0.0129 286.07;
 
     --border: 37.36% 0.0137 280.05;
     --input: 41.6% 0.0183 281.45;
