@@ -235,12 +235,23 @@ if (command === "init") {
     // Create Styles
     const stylesFilePath = path.join(projectRoot, answers.stylesPath);
     fs.mkdirSync(path.dirname(stylesFilePath), { recursive: true });
-    fs.writeFileSync(stylesFilePath, AERIUI_CSS, {
-      flag: "w",
-    });
-    console.log(
-      `✅ CSS variables and Tailwind styles added at ${answers.stylesPath}`
-    );
+
+    let existingContent = "";
+    if (fs.existsSync(stylesFilePath)) {
+      existingContent = fs.readFileSync(stylesFilePath, "utf-8");
+    }
+
+    if (!existingContent.includes(AERIUI_CSS.trim())) {
+      const newContent = existingContent + "\n" + AERIUI_CSS;
+      fs.writeFileSync(stylesFilePath, newContent, { flag: "w" });
+      console.log(
+        `✅ Appended AeriUI CSS variables to existing file at ${answers.stylesPath}`
+      );
+    } else {
+      console.log(
+        `⚠️ AeriUI CSS variables already present at ${answers.stylesPath}, no changes made.`
+      );
+    }
 
     // Create Components Folder
     const componentsDir = path.join(projectRoot, answers.componentPath);
