@@ -14,7 +14,7 @@ export interface CheckboxProps
 const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
   (
     { className, checked, defaultChecked = false, onCheckedChange, ...props },
-    ref
+    ref,
   ) => {
     const isControlled = checked !== undefined;
     const [internalChecked, setInternalChecked] = useState(defaultChecked);
@@ -39,12 +39,12 @@ const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
         role="checkbox"
         aria-checked={currentChecked}
         className={cn(
-          `mt-1 flex h-4 w-4 shrink-0 cursor-pointer appearance-none items-center justify-center rounded ${
+          `flex h-4 w-4 shrink-0 cursor-pointer appearance-none items-center justify-center rounded ${
             currentChecked
               ? "bg-primary border-0"
               : "bg-background border-border border"
           }`,
-          className
+          className,
         )}
         onClick={handleClick}
         {...props}
@@ -54,7 +54,7 @@ const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
         )}
       </button>
     );
-  }
+  },
 );
 
 Checkbox.displayName = "Checkbox";

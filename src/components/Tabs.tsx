@@ -8,6 +8,7 @@ import React, {
   SetStateAction,
 } from "react";
 import { cn } from "@/app/lib/utils/cn";
+import { cva, type VariantProps } from "class-variance-authority";
 
 interface TabsContextProps {
   active: string;
@@ -36,23 +37,35 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
 );
 Tabs.displayName = "Tabs";
 
-const TabList = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, children, ...props }, ref) => {
-  return (
-    <div
-      ref={ref}
-      className={cn(
-        "bg-background border-border relative flex w-min rounded border p-px text-sm",
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </div>
-  );
-});
+const tabsListVariants = cva(
+  "bg-background border-border relative flex w-min rounded border p-px text-sm",
+  {
+    variants: {
+      position: {
+        start: "mr-auto",
+        center: "mx-auto",
+        end: "ml-auto",
+      },
+    },
+  }
+);
+
+type TabListProps = React.HTMLAttributes<HTMLDivElement> &
+  VariantProps<typeof tabsListVariants>;
+
+const TabList = React.forwardRef<HTMLDivElement, TabListProps>(
+  ({ className, children, position, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(tabsListVariants({ position }), className)}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+);
 TabList.displayName = "TabList";
 
 interface TabProps extends React.HTMLAttributes<HTMLDivElement> {
