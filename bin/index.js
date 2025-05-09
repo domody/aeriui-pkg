@@ -117,15 +117,19 @@ const allComponents = [
   "Accordion",
   "Alert",
   "Badge",
+  "Button",
   "Card",
+  "Checkbox",
   "ContextMenu",
   "Dropdown",
   "Input",
   "Modal",
   "OptionList",
   "Selector",
+  "Separator",
   "Slot",
   "Tabs",
+  "Tooltip",
 ];
 
 function downloadComponent(componentName) {
@@ -283,22 +287,21 @@ export function cn(...inputs: ClassValue[]) {
     );
     console.log(`✅ cn.ts utility created at ${answers.cnPath}`);
 
+    // Create aeriui.json file
+    const aeriuiConfig = {
+      createdAt: new Date().toISOString(),
+      description: "AeriUI config file",
+      stylesPath: answers.stylesPath,
+      componentPath: answers.componentPath,
+      cnPath: answers.cnPath,
+    };
+
+    const configPath = path.join(projectRoot, "aeriui.json");
+
+    fs.writeFileSync(configPath, JSON.stringify(aeriuiConfig, null, 2));
+    console.log(`✅ aeriui.json created at ${configPath}`);
     console.log("\n🎉 AeriUI has been initialized successfully!");
   });
-
-  // Create aeriui.json file
-  const aeriuiConfig = {
-    createdAt: new Date().toISOString(),
-    description: "AeriUI config file",
-    stylesPath: answers.stylesPath,
-    componentPath: answers.componentPath,
-    cnPath: answers.cnPath,
-  };
-
-  const configPath = path.join(projectRoot, "aeriui.json");
-
-  fs.writeFileSync(configPath, JSON.stringify(aeriuiConfig, null, 2));
-  console.log(`✅ aeriui.json created at ${configPath}`);
 } else if (command === "add" && args[1]) {
   const componentName = args[1];
 
